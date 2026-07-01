@@ -61,7 +61,9 @@ export class NemoIcon {
           role={this.label ? 'img' : undefined}
           aria-label={this.label}
           aria-hidden={this.label ? undefined : 'true'}
-          innerHTML={shape ?? ''}
+          ref={(el) => {
+            if (el) el.innerHTML = shape ?? '';
+          }}
         />
       </Host>
     );
