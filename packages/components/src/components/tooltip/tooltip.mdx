@@ -1,0 +1,72 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TooltipStories from './tooltip.stories';
+
+<Meta of={TooltipStories} />
+
+# Tooltip
+
+Content on this page is sourced from the **Nemo Design System** Figma file (node `1012-2066`,
+component set `10978-23978`, "Tooltip") — see `CLAUDE.md` for the source link. The prop/event/slot
+API table below is generated from `custom-elements.json`; it is not hand-maintained here.
+
+## Purpose
+
+A tooltip is a hint on what a tool or interaction does. It clarifies or helps use the content it's
+attached to — it does not add new content. Tooltips appear on hover or keyboard focus, contain
+brief, non-interactive text only, and disappear as soon as hover or focus is removed.
+
+## Positioning
+
+Tooltips are multi-directional. Choose `position` based on the space available around the
+trigger so the tooltip is never cut off by the viewport:
+
+- Default to `top` or `bottom` when possible, for visual consistency.
+- Use `left` or `right` when horizontal space is limited.
+- Keep a consistent gap between trigger and tooltip (`nemo-tooltip` uses ~8px).
+
+## Content guidelines
+
+- Keep text brief — ideally 1-5 words, at most 1-2 short sentences.
+- Provide just enough to clarify the trigger's purpose; don't repeat what's already visible.
+- Never put critical information users must know only in a tooltip.
+- Sentence case, no trailing period for short phrases; full sentences take a period.
+
+## Trigger behavior
+
+- Appears on mouse hover over the trigger.
+- Appears on keyboard focus, for accessibility.
+- Disappears when hover or focus is removed.
+- Cannot contain interactive elements (buttons, links, forms) — it is read-only, glance content.
+
+## Tooltip vs. Popover
+
+If the content needs to be read at length or interacted with (buttons, forms, links), use a
+popover instead. Reach for `nemo-tooltip` only when the content is a quick, non-interactive hint:
+
+| Use **Tooltip** when...                    | Use **Popover** when...                          |
+| ------------------------------------------- | ------------------------------------------------- |
+| Content is brief, informational text only. | Content requires user interaction.                |
+| No user interaction is needed.              | Information is rich and detailed.                 |
+| Triggered by hover or focus.                | Users need to perform an action.                  |
+| Content is non-critical and supplementary.  | Content should stay visible while users interact. |
+
+## Accessibility checklist
+
+- Tooltip content is linked to its trigger via `aria-describedby`, and exposed with `role="tooltip"`.
+- Appears on keyboard focus, not just mouse hover — never rely on hover alone.
+- The trigger keeps a clearly visible `:focus-visible` ring.
+- The built-in icon trigger is icon-only and always carries an accessible name (`accessibleLabel`,
+  defaults to "More information" — override it for the trigger's actual meaning or locale).
+- Minimum touch target size (~44px) even where the visual icon is smaller.
+- Tooltips don't work well on touch (no hover state) — don't rely on one to convey essential
+  information; provide an alternative (inline help text, a popover) for touch users.
+- Before shipping: verify the tooltip appears on both hover and focus, is announced by screen
+  readers, doesn't obscure important content, and stays within the viewport at every position.
+
+## API
+
+<Controls of={TooltipStories.Bottom} />
+
+## Stories
+
+<Stories />

@@ -1,0 +1,150 @@
+/*
+ * nemo-tooltip — values resolved from Figma node 1012-2066 (component set 10978-23978).
+ * Colors reference the semantic token tier only (--nemo-color-*).
+ * Spacing/radius/typography use resolved Figma values until those foundations
+ * get dedicated token tiers (future, additive).
+ */
+
+:host {
+  position: relative;
+  display: inline-block;
+  /* Figma label/small: Source Sans Pro, 12/18. */
+  font-family:
+    'Source Sans Pro',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+
+/* ---- Custom trigger ---- */
+
+.trigger {
+  display: inline-block;
+}
+
+.trigger ::slotted(*) {
+  vertical-align: middle;
+}
+
+/* ---- Built-in icon trigger (Figma: status/info) ---- */
+
+.icon-trigger {
+  position: relative;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  margin: 0;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--nemo-color-info);
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Accessible hit target ≥ 44×44 without changing the visual icon size. */
+.icon-trigger::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100%, 44px);
+  height: max(100%, 44px);
+  transform: translate(-50%, -50%);
+}
+
+/* Full: filled circle, inverted icon color (Figma: Tooltip icon = Full). */
+:host([icon-variant='full']) .icon-trigger {
+  background: var(--nemo-color-info);
+  color: var(--nemo-color-on-info);
+}
+
+/* Outlined: ringed circle, info-colored icon (Figma: Tooltip icon = Outlined). */
+:host([icon-variant='outlined']) .icon-trigger {
+  border-color: var(--nemo-color-info);
+  background: transparent;
+  color: var(--nemo-color-info);
+}
+
+.icon-trigger:focus-visible {
+  outline: 2px solid var(--nemo-color-primary);
+  outline-offset: 2px;
+}
+
+/* ---- Content panel (Figma: menu_dropdown) ---- */
+
+.content {
+  position: absolute;
+  z-index: 10;
+  box-sizing: border-box;
+  display: block;
+  min-width: 200px;
+  max-width: 280px;
+  /* Figma: outer py xs (4) + inner py s (8) = 12 vertical, inner px l (24) horizontal. */
+  padding: 12px 24px;
+  border: 1px solid var(--nemo-color-outline-variant);
+  border-radius: 4px;
+  background: var(--nemo-color-surface);
+  color: var(--nemo-color-on-surface);
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  white-space: normal;
+  /* Elevation shadow derived from the semantic --nemo-color-shadow token
+   * (never a raw rgba literal — see CLAUDE.md token discipline). */
+  box-shadow: 0 2px 3px color-mix(in srgb, var(--nemo-color-shadow) 32%, transparent);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 120ms ease,
+    visibility 120ms ease;
+}
+
+/* Reveal on hover or keyboard focus of the trigger (mouse and keyboard parity). */
+:host(:hover) .content,
+:host(:focus-within) .content {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    transition: none;
+  }
+}
+
+/* ---- Position (Figma: consistent ~4-8px gap between trigger and tooltip) ---- */
+
+:host([position='bottom']) .content {
+  top: 100%;
+  left: 50%;
+  margin-top: 8px; /* Figma: s */
+  transform: translateX(-50%);
+}
+
+:host([position='top']) .content {
+  bottom: 100%;
+  left: 50%;
+  margin-bottom: 8px; /* Figma: s */
+  transform: translateX(-50%);
+}
+
+:host([position='right']) .content {
+  top: 50%;
+  left: 100%;
+  margin-left: 8px; /* Figma: s */
+  transform: translateY(-50%);
+}
+
+:host([position='left']) .content {
+  top: 50%;
+  right: 100%;
+  margin-right: 8px; /* Figma: s */
+  transform: translateY(-50%);
+}

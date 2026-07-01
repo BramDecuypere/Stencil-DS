@@ -8,9 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { NemoButtonSize, NemoButtonType, NemoButtonVariant } from "./components/button/button";
 import { NemoIconName } from "./components/icon/icons.generated";
 import { NemoValidationState } from "./components/text-input/text-input";
+import { NemoTooltipIconVariant, NemoTooltipPosition } from "./components/tooltip/tooltip";
 export { NemoButtonSize, NemoButtonType, NemoButtonVariant } from "./components/button/button";
 export { NemoIconName } from "./components/icon/icons.generated";
 export { NemoValidationState } from "./components/text-input/text-input";
+export { NemoTooltipIconVariant, NemoTooltipPosition } from "./components/tooltip/tooltip";
 export namespace Components {
     /**
      * Nemo button. Maps the Figma `Type` (Primary/Secondary/Tertiary/Small/Icon) and
@@ -158,6 +160,46 @@ export namespace Components {
          */
         "value": string;
     }
+    /**
+     * Nemo tooltip. Implements the Figma `Tooltip` component (node 1012-2066 /
+     * component set 10978-23978): a short, non-interactive hint revealed on hover
+     * or keyboard focus of a trigger, positioned to one of four sides.
+     * Wrap any trigger in the default slot:
+     * `<nemo-tooltip content="Hint"><button>Hover me</button></nemo-tooltip>`.
+     * With no slotted trigger, a built-in `info` icon is rendered instead — the
+     * pattern used throughout the Figma file — styled `full` (filled) or
+     * `outlined` via `iconVariant`.
+     * Visibility is CSS-driven (`:hover` / `:focus-within`) so mouse and keyboard
+     * behave identically, per the Figma spec: tooltips must appear on keyboard
+     * focus, disappear when hover/focus is removed, and never contain
+     * interactive content. The trigger is linked to the tooltip text via
+     * `aria-describedby` (the tooltip is a description, never the trigger's only
+     * accessible name).
+     * Colors reference the semantic token tier only (`--nemo-color-*`). Spacing,
+     * radius and typography use resolved Figma values directly until those
+     * foundations get dedicated token tiers (future, additive).
+     */
+    interface NemoTooltip {
+        /**
+          * Accessible name for the built-in icon trigger (icon-only control — requires an accessible name per the a11y baseline). Ignored when a custom trigger is slotted (that element owns its own accessible name).
+          * @default 'More information'
+         */
+        "accessibleLabel": string;
+        /**
+          * Tooltip text. Keep it brief — per Figma: 1-5 words, max 1-2 short sentences.
+         */
+        "content": string;
+        /**
+          * Style of the built-in info-icon trigger. Ignored when a custom trigger is slotted.
+          * @default 'full'
+         */
+        "iconVariant": NemoTooltipIconVariant;
+        /**
+          * Which side the tooltip opens toward.
+          * @default 'bottom'
+         */
+        "position": NemoTooltipPosition;
+    }
 }
 export interface NemoButtonCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -239,10 +281,36 @@ declare global {
         prototype: HTMLNemoTextInputElement;
         new (): HTMLNemoTextInputElement;
     };
+    /**
+     * Nemo tooltip. Implements the Figma `Tooltip` component (node 1012-2066 /
+     * component set 10978-23978): a short, non-interactive hint revealed on hover
+     * or keyboard focus of a trigger, positioned to one of four sides.
+     * Wrap any trigger in the default slot:
+     * `<nemo-tooltip content="Hint"><button>Hover me</button></nemo-tooltip>`.
+     * With no slotted trigger, a built-in `info` icon is rendered instead — the
+     * pattern used throughout the Figma file — styled `full` (filled) or
+     * `outlined` via `iconVariant`.
+     * Visibility is CSS-driven (`:hover` / `:focus-within`) so mouse and keyboard
+     * behave identically, per the Figma spec: tooltips must appear on keyboard
+     * focus, disappear when hover/focus is removed, and never contain
+     * interactive content. The trigger is linked to the tooltip text via
+     * `aria-describedby` (the tooltip is a description, never the trigger's only
+     * accessible name).
+     * Colors reference the semantic token tier only (`--nemo-color-*`). Spacing,
+     * radius and typography use resolved Figma values directly until those
+     * foundations get dedicated token tiers (future, additive).
+     */
+    interface HTMLNemoTooltipElement extends Components.NemoTooltip, HTMLStencilElement {
+    }
+    var HTMLNemoTooltipElement: {
+        prototype: HTMLNemoTooltipElement;
+        new (): HTMLNemoTooltipElement;
+    };
     interface HTMLElementTagNameMap {
         "nemo-button": HTMLNemoButtonElement;
         "nemo-icon": HTMLNemoIconElement;
         "nemo-text-input": HTMLNemoTextInputElement;
+        "nemo-tooltip": HTMLNemoTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -406,6 +474,46 @@ declare namespace LocalJSX {
          */
         "value"?: string;
     }
+    /**
+     * Nemo tooltip. Implements the Figma `Tooltip` component (node 1012-2066 /
+     * component set 10978-23978): a short, non-interactive hint revealed on hover
+     * or keyboard focus of a trigger, positioned to one of four sides.
+     * Wrap any trigger in the default slot:
+     * `<nemo-tooltip content="Hint"><button>Hover me</button></nemo-tooltip>`.
+     * With no slotted trigger, a built-in `info` icon is rendered instead — the
+     * pattern used throughout the Figma file — styled `full` (filled) or
+     * `outlined` via `iconVariant`.
+     * Visibility is CSS-driven (`:hover` / `:focus-within`) so mouse and keyboard
+     * behave identically, per the Figma spec: tooltips must appear on keyboard
+     * focus, disappear when hover/focus is removed, and never contain
+     * interactive content. The trigger is linked to the tooltip text via
+     * `aria-describedby` (the tooltip is a description, never the trigger's only
+     * accessible name).
+     * Colors reference the semantic token tier only (`--nemo-color-*`). Spacing,
+     * radius and typography use resolved Figma values directly until those
+     * foundations get dedicated token tiers (future, additive).
+     */
+    interface NemoTooltip {
+        /**
+          * Accessible name for the built-in icon trigger (icon-only control — requires an accessible name per the a11y baseline). Ignored when a custom trigger is slotted (that element owns its own accessible name).
+          * @default 'More information'
+         */
+        "accessibleLabel"?: string;
+        /**
+          * Tooltip text. Keep it brief — per Figma: 1-5 words, max 1-2 short sentences.
+         */
+        "content": string;
+        /**
+          * Style of the built-in info-icon trigger. Ignored when a custom trigger is slotted.
+          * @default 'full'
+         */
+        "iconVariant"?: NemoTooltipIconVariant;
+        /**
+          * Which side the tooltip opens toward.
+          * @default 'bottom'
+         */
+        "position"?: NemoTooltipPosition;
+    }
 
     interface NemoButtonAttributes {
         "variant": NemoButtonVariant;
@@ -437,11 +545,18 @@ declare namespace LocalJSX {
         "name": string;
         "inputId": string;
     }
+    interface NemoTooltipAttributes {
+        "content": string;
+        "position": NemoTooltipPosition;
+        "iconVariant": NemoTooltipIconVariant;
+        "accessibleLabel": string;
+    }
 
     interface IntrinsicElements {
         "nemo-button": Omit<NemoButton, keyof NemoButtonAttributes> & { [K in keyof NemoButton & keyof NemoButtonAttributes]?: NemoButton[K] } & { [K in keyof NemoButton & keyof NemoButtonAttributes as `attr:${K}`]?: NemoButtonAttributes[K] } & { [K in keyof NemoButton & keyof NemoButtonAttributes as `prop:${K}`]?: NemoButton[K] };
         "nemo-icon": Omit<NemoIcon, keyof NemoIconAttributes> & { [K in keyof NemoIcon & keyof NemoIconAttributes]?: NemoIcon[K] } & { [K in keyof NemoIcon & keyof NemoIconAttributes as `attr:${K}`]?: NemoIconAttributes[K] } & { [K in keyof NemoIcon & keyof NemoIconAttributes as `prop:${K}`]?: NemoIcon[K] } & OneOf<"name", NemoIcon["name"], NemoIconAttributes["name"]>;
         "nemo-text-input": Omit<NemoTextInput, keyof NemoTextInputAttributes> & { [K in keyof NemoTextInput & keyof NemoTextInputAttributes]?: NemoTextInput[K] } & { [K in keyof NemoTextInput & keyof NemoTextInputAttributes as `attr:${K}`]?: NemoTextInputAttributes[K] } & { [K in keyof NemoTextInput & keyof NemoTextInputAttributes as `prop:${K}`]?: NemoTextInput[K] } & OneOf<"label", NemoTextInput["label"], NemoTextInputAttributes["label"]>;
+        "nemo-tooltip": Omit<NemoTooltip, keyof NemoTooltipAttributes> & { [K in keyof NemoTooltip & keyof NemoTooltipAttributes]?: NemoTooltip[K] } & { [K in keyof NemoTooltip & keyof NemoTooltipAttributes as `attr:${K}`]?: NemoTooltipAttributes[K] } & { [K in keyof NemoTooltip & keyof NemoTooltipAttributes as `prop:${K}`]?: NemoTooltip[K] } & OneOf<"content", NemoTooltip["content"], NemoTooltipAttributes["content"]>;
     }
 }
 export { LocalJSX as JSX };
@@ -481,6 +596,26 @@ declare module "@stencil/core" {
              * Colors reference the semantic token tier only (`--nemo-color-*`).
              */
             "nemo-text-input": LocalJSX.IntrinsicElements["nemo-text-input"] & JSXBase.HTMLAttributes<HTMLNemoTextInputElement>;
+            /**
+             * Nemo tooltip. Implements the Figma `Tooltip` component (node 1012-2066 /
+             * component set 10978-23978): a short, non-interactive hint revealed on hover
+             * or keyboard focus of a trigger, positioned to one of four sides.
+             * Wrap any trigger in the default slot:
+             * `<nemo-tooltip content="Hint"><button>Hover me</button></nemo-tooltip>`.
+             * With no slotted trigger, a built-in `info` icon is rendered instead — the
+             * pattern used throughout the Figma file — styled `full` (filled) or
+             * `outlined` via `iconVariant`.
+             * Visibility is CSS-driven (`:hover` / `:focus-within`) so mouse and keyboard
+             * behave identically, per the Figma spec: tooltips must appear on keyboard
+             * focus, disappear when hover/focus is removed, and never contain
+             * interactive content. The trigger is linked to the tooltip text via
+             * `aria-describedby` (the tooltip is a description, never the trigger's only
+             * accessible name).
+             * Colors reference the semantic token tier only (`--nemo-color-*`). Spacing,
+             * radius and typography use resolved Figma values directly until those
+             * foundations get dedicated token tiers (future, additive).
+             */
+            "nemo-tooltip": LocalJSX.IntrinsicElements["nemo-tooltip"] & JSXBase.HTMLAttributes<HTMLNemoTooltipElement>;
         }
     }
 }

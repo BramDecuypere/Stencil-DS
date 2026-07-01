@@ -24,11 +24,11 @@ switches it to `role="img"` + `aria-label` instead.
 
 ## Properties
 
-| Property            | Attribute | Description                                                                                                                        | Type                                                                                                                                      | Default     |
-| ------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
-| `label`             | `label`   | Accessible name. Omit for a decorative icon that's already described by its context (the common case — e.g. inside `nemo-button`). | `string \| undefined`                                                                                                                     | `undefined` |
-| `name` _(required)_ | `name`    | Icon name — must match a key generated from `icons/*.svg`.                                                                         | `"alert-circle" \| "alert-triangle" \| "arrow-right" \| "check" \| "chevron-down" \| "close" \| "eye" \| "eye-off" \| "mail" \| "search"` | `undefined` |
-| `size`              | `size`    | Pixel size (square). Defaults to 24, matching every source icon's viewBox.                                                         | `number`                                                                                                                                  | `24`        |
+| Property            | Attribute | Description                                                                                                                        | Type                                                                                                                                                | Default     |
+| ------------------- | --------- | ---------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| `label`             | `label`   | Accessible name. Omit for a decorative icon that's already described by its context (the common case — e.g. inside `nemo-button`). | `string \| undefined`                                                                                                                               | `undefined` |
+| `name` _(required)_ | `name`    | Icon name — must match a key generated from `icons/*.svg`.                                                                         | `"alert-circle" \| "alert-triangle" \| "arrow-right" \| "check" \| "chevron-down" \| "close" \| "eye" \| "eye-off" \| "info" \| "mail" \| "search"` | `undefined` |
+| `size`              | `size`    | Pixel size (square). Defaults to 24, matching every source icon's viewBox.                                                         | `number`                                                                                                                                            | `24`        |
 
 
 ## Shadow Parts
@@ -37,6 +37,19 @@ switches it to `role="img"` + `aria-label` instead.
 | ------- | ------------------------------- |
 | `"svg"` | The underlying `<svg>` element. |
 
+
+## Dependencies
+
+### Used by
+
+ - [nemo-tooltip](../tooltip)
+
+### Graph
+```mermaid
+graph TD;
+  nemo-tooltip --> nemo-icon
+  style nemo-icon fill:#f9f,stroke:#333,stroke-width:4px
+```
 
 ----------------------------------------------
 
