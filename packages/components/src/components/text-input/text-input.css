@@ -1,0 +1,227 @@
+/*
+ * nemo-text-input — values resolved from Figma node 4-33.
+ * Colors reference the semantic token tier only (--nemo-color-*).
+ * Spacing/radius/typography use resolved Figma values until those foundations
+ * get dedicated token tiers (future, additive).
+ */
+
+:host {
+  display: block;
+  /* Figma body/medium + label/small are Source Sans Pro. */
+  font-family:
+    'Source Sans Pro',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+}
+
+/* gap between field and helper/validation (Figma: xs = 4px) */
+.field-wrap {
+  position: relative;
+  padding-top: 9px;
+}
+
+/* ---- Label (notched onto the top border) ---- */
+
+.label {
+  position: absolute;
+  top: 0;
+  left: 8px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  padding: 0 4px;
+  background: var(--nemo-color-surface);
+  color: var(--nemo-color-on-surface);
+  /* Figma label/small: 12 / 18 */
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.required {
+  color: var(--nemo-color-error);
+}
+
+.tooltip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 1px solid var(--nemo-color-outline);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--nemo-color-on-surface-variant);
+  font-size: 10px;
+  line-height: 1;
+  cursor: help;
+}
+
+.tooltip:focus-visible {
+  outline: 2px solid var(--nemo-color-primary);
+  outline-offset: 2px;
+}
+
+/* ---- Field ---- */
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Figma: s */
+  box-sizing: border-box;
+  min-height: 44px; /* a11y touch target (Figma visual ≈ 42px) */
+  padding: 8px; /* Figma: s */
+  border: 1px solid var(--nemo-color-outline-variant);
+  border-radius: 4px; /* Figma: small */
+  background: var(--nemo-color-surface);
+  transition:
+    border-color 120ms ease,
+    box-shadow 120ms ease;
+}
+
+.input {
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--nemo-color-on-surface);
+  /* Figma body/medium: 16 / 26 */
+  font: inherit;
+  font-size: 16px;
+  line-height: 26px;
+}
+
+textarea.input {
+  resize: vertical;
+  min-height: 78px;
+}
+
+.input::placeholder {
+  color: var(--nemo-color-on-surface-variant);
+  opacity: 1;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 16px;
+  height: 16px;
+  color: var(--nemo-color-on-surface-variant);
+}
+
+.icon ::slotted(*) {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- Helper + validation ---- */
+
+.helper {
+  margin: 4px 0 0;
+  color: var(--nemo-color-on-surface);
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.validation {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 8px; /* Figma: py xs, px s */
+  border-bottom: 1px solid currentColor;
+  font-size: 12px;
+  line-height: 18px;
+}
+
+.status-icon {
+  flex: 0 0 auto;
+  line-height: 18px;
+}
+
+/* ---- Interaction states (CSS) ---- */
+
+/* Hover (Figma: Outline). */
+:host(:not([disabled]):not([readonly])) .field:hover {
+  border-color: var(--nemo-color-outline);
+}
+
+/* Active / focus (Figma: On Surface) + visible focus ring (a11y baseline). */
+:host(:not([disabled])) .field:focus-within {
+  border-color: var(--nemo-color-on-surface);
+  box-shadow: 0 0 0 2px var(--nemo-color-primary);
+}
+
+/* ---- Error ---- */
+
+:host([validation-state='error']) .label {
+  color: var(--nemo-color-on-error-container);
+}
+
+:host([validation-state='error']) .field {
+  border-color: var(--nemo-color-on-error-container);
+}
+
+:host([validation-state='error']) .validation {
+  background: var(--nemo-color-error-container);
+  border-bottom-color: var(--nemo-color-on-error-container);
+  color: var(--nemo-color-on-error-container);
+}
+
+/* ---- Warning ---- */
+
+:host([validation-state='warning']) .label {
+  color: var(--nemo-color-on-warn-container);
+}
+
+:host([validation-state='warning']) .field {
+  border-color: var(--nemo-color-on-warn-container);
+}
+
+:host([validation-state='warning']) .validation {
+  background: var(--nemo-color-warn-container);
+  border-bottom-color: var(--nemo-color-on-warn-container);
+  color: var(--nemo-color-on-warn-container);
+}
+
+/* ---- Disabled (Figma: opacity 0.40, Outline border/text) ---- */
+
+:host([disabled]) {
+  opacity: 0.4;
+}
+
+:host([disabled]) .field {
+  border-color: var(--nemo-color-outline);
+}
+
+:host([disabled]) .input {
+  color: var(--nemo-color-outline);
+  cursor: not-allowed;
+}
+
+/* ---- Read-only (Figma: borderless; stays focusable & announced) ---- */
+
+:host([readonly]) .field {
+  border-color: transparent;
+  padding-left: 0;
+  background: transparent;
+}
+
+:host([readonly]) .field:focus-within {
+  border-color: transparent;
+  box-shadow: none;
+  outline: 2px solid var(--nemo-color-primary);
+  outline-offset: 2px;
+  border-radius: 4px;
+}

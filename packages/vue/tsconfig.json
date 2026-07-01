@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "lib": ["DOM", "ES2020"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2020",
+    "skipLibCheck": true,
+    "declaration": true,
+    "esModuleInterop": true
+  },
+  "include": ["lib"],
+  "exclude": ["node_modules", "dist"]
+}

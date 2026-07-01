@@ -1,0 +1,64 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Tokens" />
+
+# Tokens
+
+See the **Foundations/Colors** story for a live swatch of every semantic role (with its resolved
+hex value); this page explains the architecture behind it. Full Figma traceability notes and
+outstanding `TODO`s live in `docs/TOKENS.md`.
+
+## Two tiers
+
+**Nemo** models color as two DTCG (`$value`/`$type`) tiers, built by Style Dictionary from
+`packages/tokens/tokens/`:
+
+- **Primitive** (`tokens/primitive/`) — raw tonal palette scales resolved from Figma (e.g.
+  `palette.primary.40 = #625d9c`). Build-time source material only.
+- **Semantic** (`tokens/semantic/<theme>/`) — the role layer components actually consume (e.g.
+  `color.primary`, `color.on-surface`, `color.error-container`), each aliasing a primitive value
+  with `{palette.family.tone}` syntax.
+
+**Components reference the semantic tier only — never a primitive, never a raw hex or `rgb()`/
+`hsl()` literal.** This is the single rule that makes both theming and rebranding possible: swap
+what a semantic role points to (a new brand primitive, a dark-mode primitive) and every component
+that consumes it updates automatically, with zero component code changes. A component that reads
+a primitive or a literal color is a bug — Stylelint's `declaration-property-value-disallowed-list`
+rule (Phase 5, `.stylelintrc.json`) enforces this on every `packages/components/src/components/**/
+*.css` file in CI.
+
+## Theming / modes
+
+Themes are DTCG **modes**: a theme is just a different `tokens/semantic/<theme>/` directory
+aliasing the _same_ primitives (or different ones, for a full rebrand) to the _same_ semantic role
+names. `@nemo/tokens`'s build emits one CSS variable block per theme:
+
+- `:root` — the default (light) theme.
+- `[data-theme="dark"]` — applied by setting `data-theme="dark"` on `<html>` or any ancestor
+  element; every `--nemo-color-*` variable cascades to its dark-theme value from that point down.
+
+Consumers never write per-theme CSS themselves — they set the `data-theme` attribute (or don't,
+for light) and every Nemo component re-themes for free, because every component already reads
+`var(--nemo-color-*)` and nothing else.
+
+> Only `light` currently has real Figma-resolved values — `dark` is an open `TODO` (see
+> `docs/TOKENS.md`). The build already supports adding it: drop token files into
+> `tokens/semantic/dark/` and the `[data-theme="dark"]` block is generated automatically.
+
+## Consuming tokens in code
+
+```ts
+import { nemoColor } from '@nemo/tokens';
+// nemoColor.primary === 'var(--nemo-color-primary)'
+```
+
+`@nemo/tokens` ships both the compiled `tokens.css` (the custom properties themselves) and a typed
+`tokens.ts` (a `Record<role, 'var(--nemo-color-role)'>`), so components and consuming apps get
+autocomplete instead of stringly-typed `var(--…)` and a compile error instead of a typo'd role
+name.
+
+## Adding or changing a token
+
+See `CONTRIBUTING.md` and the deprecation policy in `docs/DEPRECATION.md` — in short: primitives
+are added freely, but **renaming or removing a semantic role is a breaking (major) change**, and
+should go through a deprecation cycle (`$deprecated` on the token) rather than a silent removal.

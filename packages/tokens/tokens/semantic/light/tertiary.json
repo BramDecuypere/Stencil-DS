@@ -1,0 +1,12 @@
+{
+  "color": {
+    "tertiary": { "$value": "{palette.tertiary.40}", "$type": "color" },
+    "on-tertiary": { "$value": "{palette.tertiary.100}", "$type": "color" },
+    "tertiary-container": { "$value": "{palette.tertiary.90}", "$type": "color" },
+    "on-tertiary-container": { "$value": "{palette.tertiary.30}", "$type": "color" },
+    "tertiary-fixed": { "$value": "{palette.tertiary.90}", "$type": "color" },
+    "on-tertiary-fixed": { "$value": "{palette.tertiary.10}", "$type": "color" },
+    "tertiary-fixed-dim": { "$value": "{palette.tertiary.80}", "$type": "color" },
+    "on-tertiary-fixed-variant": { "$value": "{palette.tertiary.30}", "$type": "color" }
+  }
+}

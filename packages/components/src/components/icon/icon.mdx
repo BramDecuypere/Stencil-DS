@@ -1,0 +1,48 @@
+import { Meta, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as IconStories from './icon.stories';
+
+<Meta of={IconStories} />
+
+# Icon
+
+`nemo-icon` renders one icon from the design system's optimized icon set (source SVGs live in
+`packages/components/icons/`; `npm run icons:build` runs them through SVGO into the generated
+`icons.generated.ts` registry — see `docs/ICONS.md`). It's the standard way to put an icon into a
+`nemo-button` slot or `nemo-text-input`'s `icon` slot.
+
+## Purpose
+
+A single, consistent way to render icons that automatically follows the design system's color and
+sizing rules, instead of every consumer hand-rolling inline `<svg>` markup with its own one-off
+stroke width, color, or viewBox.
+
+## Tokenization
+
+`nemo-icon` never hard-codes a color — every icon strokes in `currentColor`, so it always inherits
+whatever color its context already has (a button's label color, a text input's icon color, plain
+surrounding text). This is why it composes correctly inside both `nemo-button` and
+`nemo-text-input` without any extra configuration.
+
+## Accessibility
+
+An icon is **decorative by default** (`aria-hidden="true"`) because it's almost always paired with
+visible text or sits inside an already-labelled control. Pass `label` only when the icon is the
+_sole_ accessible content of its context — for an icon-only button, prefer `nemo-button`'s own
+`accessible-label` prop over labelling the icon itself (the button is what needs the accessible
+name, not the glyph inside it).
+
+## Do / Don't
+
+- Do use `nemo-icon` in `leading-icon`/`trailing-icon`/`icon` slots instead of inline `<svg>`.
+- Do rely on `currentColor` — don't wrap an icon in a `style="color: #..."` override; set color via
+  a semantic token on an ancestor instead.
+- Don't put two icons in the same button (see Components/Button → Do/Don't) — that rule is about
+  the button's icon slots, not about `nemo-icon` itself.
+
+## API
+
+<Controls of={IconStories.Default} />
+
+## Stories
+
+<Stories />

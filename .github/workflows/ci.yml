@@ -1,0 +1,126 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: 20
+
+jobs:
+  validate:
+    name: Validate (lint, typecheck, tokens)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - name: Validate DTCG token source
+        run: npm run tokens:validate
+      - name: Lint (ESLint + Stylelint + Prettier)
+        run: npm run lint
+      - name: Typecheck all packages
+        run: npm run typecheck
+
+  build:
+    name: Build (tokens -> stencil -> wrappers)
+    needs: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: package-dists
+          retention-days: 7
+          path: |
+            packages/tokens/dist
+            packages/components/dist
+            packages/components/loader
+            packages/components/custom-elements.json
+            packages/react/dist
+            packages/vue/dist
+            packages/angular/dist
+
+  test:
+    name: Test (Stencil spec/e2e + Storybook a11y)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      # Behavior tests — Stencil's own Jest (spec) + Puppeteer (e2e) runners.
+      - name: Stencil spec + e2e tests
+        run: npm run test
+      # a11y gate — every story with parameters.a11y.test = 'error' fails the
+      # build on a WCAG violation (Phase 3 addon-a11y, enforced here per Phase 5).
+      - name: Build Storybook
+        run: npm run build-storybook -w @nemo/components
+      - name: Accessibility tests (test-storybook)
+        run: npm run test.a11y -w @nemo/components
+
+  visual:
+    name: Visual regression (Chromatic)
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build:core
+      - name: Publish to Chromatic
+        uses: chromaui/action@v1
+        with:
+          workingDir: packages/components
+          buildScriptName: build-storybook
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          exitZeroOnChanges: true
+          onlyChanged: true
+
+  storybook-deploy:
+    name: Deploy Storybook (main)
+    needs: [test, visual]
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build:core
+      - run: npm run build-storybook -w @nemo/components
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/components/storybook-static
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,53 @@
+{
+  "name": "nemo-design-system",
+  "private": true,
+  "description": "Nemo Design System — npm-workspaces monorepo. Stencil web components + generated tokens + React/Vue/Angular wrappers.",
+  "license": "MIT",
+  "workspaces": [
+    "packages/tokens",
+    "packages/components",
+    "packages/react",
+    "packages/vue",
+    "packages/angular"
+  ],
+  "scripts": {
+    "build": "npm run build -w @nemo/tokens && npm run build -w @nemo/components && npm run build -w @nemo/react && npm run build -w @nemo/vue && npm run build -w @nemo/angular",
+    "build:core": "npm run build -w @nemo/tokens && npm run build -w @nemo/components",
+    "start": "npm run build -w @nemo/tokens && npm run start -w @nemo/components",
+    "test": "npm run test -w @nemo/components",
+    "storybook": "npm run storybook -w @nemo/components",
+    "changeset": "changeset",
+    "changeset:version": "changeset version",
+    "changeset:publish": "npm run build && changeset publish",
+    "tokens:validate": "node scripts/validate-tokens.mjs",
+    "lint:eslint": "eslint .",
+    "lint:format": "prettier --check .",
+    "lint": "npm run lint:eslint && npm run lint:format",
+    "format": "prettier --write .",
+    "typecheck": "npm run typecheck -w @nemo/tokens -w @nemo/components -w @nemo/react -w @nemo/vue -w @nemo/angular",
+    "prepare": "husky"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@stencil/eslint-plugin": "^1.0.0",
+    "@storybook/addon-links": "^10.4.6",
+    "eslint": "^9.13.0",
+    "eslint-config-prettier": "^9.1.0",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.9.4",
+    "storybook": "^10.4.6",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.13.0"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "eslint --fix"
+    ],
+    "**/*.{ts,tsx,css,json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

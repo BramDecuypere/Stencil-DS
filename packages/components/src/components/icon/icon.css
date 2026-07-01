@@ -1,0 +1,17 @@
+/*
+ * nemo-icon — purely structural. Color comes from `currentColor` (inherited
+ * from whatever context the icon renders in), never a token or literal
+ * color referenced here — see CLAUDE.md token discipline.
+ */
+
+:host {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  line-height: 0;
+}
+
+svg {
+  display: block;
+}

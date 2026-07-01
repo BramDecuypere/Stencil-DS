@@ -1,0 +1,28 @@
+{
+  "palette": {
+    "error": {
+      "30": { "$value": "#b3291a", "$type": "color" },
+      "40": { "$value": "#bf2600", "$type": "color" },
+      "90": { "$value": "#ffebe6", "$type": "color" },
+      "100": { "$value": "#ffffff", "$type": "color" }
+    },
+    "info": {
+      "30": { "$value": "#301ed3", "$type": "color" },
+      "40": { "$value": "#463ce5", "$type": "color" },
+      "90": { "$value": "#e0e0fc", "$type": "color" },
+      "100": { "$value": "#ffffff", "$type": "color" }
+    },
+    "warn": {
+      "30": { "$value": "#bf4e03", "$type": "color" },
+      "40": { "$value": "#c75300", "$type": "color" },
+      "90": { "$value": "#fff4eb", "$type": "color" },
+      "100": { "$value": "#ffffff", "$type": "color" }
+    },
+    "success": {
+      "30": { "$value": "#00522f", "$type": "color" },
+      "40": { "$value": "#328154", "$type": "color" },
+      "90": { "$value": "#ebfff4", "$type": "color" },
+      "100": { "$value": "#ffffff", "$type": "color" }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "palette": {
+    "secondary": {
+      "10": { "$value": "#1b1a28", "$type": "color" },
+      "30": { "$value": "#474555", "$type": "color" },
+      "40": { "$value": "#5f5c6d", "$type": "color" },
+      "80": { "$value": "#c8c4d7", "$type": "color" },
+      "90": { "$value": "#e4e0f4", "$type": "color" },
+      "100": { "$value": "#ffffff", "$type": "color" }
+    }
+  }
+}

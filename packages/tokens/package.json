@@ -1,0 +1,38 @@
+{
+  "name": "@nemo/tokens",
+  "version": "0.0.1",
+  "description": "Nemo Design System — generated design tokens (semantic color roles) as CSS custom properties and typed TS references.",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/tokens.js",
+  "module": "dist/tokens.js",
+  "types": "dist/tokens.d.ts",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/tokens.d.ts",
+      "import": "./dist/tokens.js",
+      "default": "./dist/tokens.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./css": "./dist/tokens.css",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "node scripts/build-tokens.mjs && tsc -p tsconfig.json && cp src/tokens.css dist/tokens.css",
+    "clean": "rm -rf dist src",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "devDependencies": {
+    "style-dictionary": "^4.3.3",
+    "typescript": "^5.5.4"
+  }
+}

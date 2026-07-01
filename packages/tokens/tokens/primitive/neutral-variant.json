@@ -1,0 +1,9 @@
+{
+  "palette": {
+    "neutral-variant": {
+      "30": { "$value": "#47464d", "$type": "color" },
+      "50": { "$value": "#78767d", "$type": "color" },
+      "80": { "$value": "#d7d5ed", "$type": "color" }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+# Generated — built, not hand-edited (CLAUDE.md).
+**/dist/
+**/loader/
+**/www/
+**/.stencil/
+**/storybook-static/
+**/coverage/
+**/custom-elements.json
+packages/components/src/components/**/readme.md
+packages/tokens/src/tokens.css
+packages/tokens/src/tokens.ts
+packages/components/src/global/tokens.css
+packages/components/src/global/tokens.ts
+packages/react/src/components/stencil-generated/
+packages/vue/lib/components.ts
+packages/angular/src/lib/stencil-generated/
+
+# Standard excludes.
+node_modules/
+package-lock.json
+CHANGELOG.md
+.changeset/*.md

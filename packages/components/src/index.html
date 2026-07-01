@@ -1,0 +1,127 @@
+<!doctype html>
+<html dir="ltr" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nemo Design System — Components (Phase 2)</title>
+    <!-- Global design tokens (the :root --nemo-color-* custom properties).
+         Consumers import this once; components reference it via var(). -->
+    <link rel="stylesheet" href="/build/nemo-ds.css" />
+    <script type="module" src="/build/nemo-ds.esm.js"></script>
+    <script nomodule src="/build/nemo-ds.js"></script>
+    <style>
+      body {
+        margin: 0;
+        padding: 2rem;
+        font-family: system-ui, sans-serif;
+        background: var(--nemo-color-surface);
+        color: var(--nemo-color-on-surface);
+      }
+      h1 {
+        font-size: 1.25rem;
+      }
+      h2 {
+        font-size: 1rem;
+        margin-top: 2rem;
+        color: var(--nemo-color-on-surface-variant);
+      }
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(228px, 1fr));
+        gap: 1.5rem;
+        max-width: 760px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Nemo components</h1>
+
+    <h2>Button — variants</h2>
+    <div class="row">
+      <nemo-button variant="primary">Primary</nemo-button>
+      <nemo-button variant="secondary">Secondary</nemo-button>
+      <nemo-button variant="tertiary">Tertiary</nemo-button>
+    </div>
+
+    <h2>Button — sizes, icon-only, states</h2>
+    <div class="row">
+      <nemo-button variant="secondary" size="small">Small</nemo-button>
+      <nemo-button variant="primary" loading>Loading</nemo-button>
+      <nemo-button variant="primary" disabled>Disabled</nemo-button>
+      <nemo-button variant="secondary" icon-only accessible-label="Search">
+        <svg
+          slot="leading-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <circle cx="11" cy="11" r="7" />
+          <line x1="16.5" y1="16.5" x2="21" y2="21" />
+        </svg>
+      </nemo-button>
+    </div>
+    <div class="row">
+      <nemo-button variant="primary">
+        <svg
+          slot="leading-icon"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+        With leading icon
+      </nemo-button>
+      <nemo-button variant="primary" full-width>Full width</nemo-button>
+    </div>
+
+    <h2>Text input — states</h2>
+    <div class="grid">
+      <nemo-text-input
+        label="Default"
+        placeholder="Placeholder"
+        helper-text="Helper text"
+      ></nemo-text-input>
+      <nemo-text-input
+        label="Required"
+        placeholder="Your name"
+        required
+        helper-text="We need this"
+      ></nemo-text-input>
+      <nemo-text-input
+        label="Error"
+        value="bad value"
+        validation-state="error"
+        validation-message="Attention: un conflit a été détecté."
+      ></nemo-text-input>
+      <nemo-text-input
+        label="Warning"
+        value="check me"
+        validation-state="warning"
+        validation-message="This looks unusual."
+      ></nemo-text-input>
+      <nemo-text-input label="Read only" value="Displayed, not editable" readonly></nemo-text-input>
+      <nemo-text-input label="Disabled" placeholder="Unavailable" disabled></nemo-text-input>
+      <nemo-text-input
+        label="With tooltip"
+        placeholder="NISS"
+        tooltip="Numéro de sécurité sociale (11 digits)"
+      ></nemo-text-input>
+      <nemo-text-input
+        label="Expandable"
+        placeholder="Your message"
+        expandable
+        helper-text="Multi-line"
+      ></nemo-text-input>
+    </div>
+  </body>
+</html>

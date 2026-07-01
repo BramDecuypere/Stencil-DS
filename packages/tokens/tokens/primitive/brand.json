@@ -1,0 +1,8 @@
+{
+  "palette": {
+    "gradient": {
+      "secondary-start": { "$value": "#de2174", "$type": "color" },
+      "secondary-end": { "$value": "#eb152a", "$type": "color" }
+    }
+  }
+}

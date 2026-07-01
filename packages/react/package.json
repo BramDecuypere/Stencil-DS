@@ -1,0 +1,45 @@
+{
+  "name": "@nemo/react",
+  "version": "0.0.1",
+  "description": "Nemo Design System — typed React component wrappers, generated from @nemo/components via @stencil/react-output-target.",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p . --outDir ./dist",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc -p . --noEmit"
+  },
+  "dependencies": {
+    "@nemo/components": "*",
+    "@stencil/react-output-target": "^1.5.3"
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "typescript": "^5.5.4"
+  }
+}

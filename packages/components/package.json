@@ -1,0 +1,87 @@
+{
+  "name": "@nemo/components",
+  "version": "0.0.1",
+  "description": "Nemo Design System — Stencil web components, token-driven, multi-framework.",
+  "license": "MIT",
+  "type": "module",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/nemo-ds/nemo-ds.esm.js",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs.js"
+    },
+    "./dist/*": {
+      "types": "./dist/*",
+      "import": "./dist/*"
+    },
+    "./components/*": {
+      "import": "./dist/components/*.js",
+      "types": "./dist/components/*.d.ts"
+    },
+    "./loader": {
+      "types": "./loader/index.d.ts",
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs.js"
+    },
+    "./custom-elements.json": "./custom-elements.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist/",
+    "loader/",
+    "custom-elements.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "tokens:build": "npm --prefix ../tokens run build",
+    "icons:build": "node scripts/build-icons.mjs",
+    "build": "npm run tokens:build && npm run icons:build && stencil build",
+    "start": "npm run tokens:build && npm run icons:build && stencil build --dev --watch --serve",
+    "test": "npm run tokens:build && npm run icons:build && stencil test --spec --e2e",
+    "test.watch": "npm run tokens:build && npm run icons:build && stencil test --spec --e2e --watchAll",
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "generate": "stencil generate",
+    "storybook": "storybook dev -p 6006 --no-open",
+    "build-storybook": "storybook build -o storybook-static",
+    "test.a11y": "concurrently -k -s first \"http-server storybook-static --port 6006 --silent\" \"wait-on tcp:6006 && test-storybook --url http://localhost:6006\"",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@angular/common": "21.2.17",
+    "@angular/compiler-cli": "^15.0.4",
+    "@angular/core": "21.2.17",
+    "@nemo/tokens": "*",
+    "ng-packagr": "^15.2.2"
+  },
+  "devDependencies": {
+    "@stencil/angular-output-target": "^1.1.1",
+    "@stencil/core": "^4.43.5",
+    "@stencil/react-output-target": "^1.5.3",
+    "@stencil/storybook-plugin": "^0.7.0",
+    "@stencil/vue-output-target": "^0.13.1",
+    "@storybook/addon-a11y": "^10.4.6",
+    "@storybook/addon-docs": "10.4.6",
+    "@storybook/test-runner": "^0.23.0",
+    "@types/jest": "^29.5.12",
+    "chromatic": "^17.8.0",
+    "concurrently": "^9.0.1",
+    "eslint-plugin-storybook": "10.4.6",
+    "http-server": "^14.1.1",
+    "jest": "^29.7.0",
+    "jest-cli": "^29.7.0",
+    "puppeteer": "^23.0.0",
+    "svgo": "^3.3.2",
+    "typescript": "^5.5.4",
+    "vite-plugin-live-reload": "^3.0.3",
+    "wait-on": "^8.0.1"
+  }
+}

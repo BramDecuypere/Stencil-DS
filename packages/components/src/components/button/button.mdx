@@ -1,0 +1,91 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as ButtonStories from './button.stories';
+
+<Meta of={ButtonStories} />
+
+# Button
+
+Content on this page is sourced from the **Nemo Design System** Figma file (node `4-31`,
+"Buttons - Documentation") — see `CLAUDE.md` for the source link. The prop/event/slot API table
+below is generated from `custom-elements.json`; it is not hand-maintained here.
+
+## Purpose
+
+Buttons are interactive elements that let users trigger actions or navigate through an
+application. In public-sector services, buttons are critical touchpoints that can make the
+difference between a citizen successfully completing a task or abandoning it in frustration:
+
+- They guide users through complex processes like applications, payments, or document submissions.
+- Clear buttons reduce cognitive load for users who may be stressed or unfamiliar with digital interfaces.
+- Every button should make it immediately clear what action will happen when clicked.
+
+## When to use each variant
+
+| Variant                               | Purpose                                                                                   | When to use                                                                                                                                                              |
+| ------------------------------------- | ----------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Primary** (`variant="primary"`)     | The most important action on a page or section. Use **one** per screen or major section.  | Final step in a process (submit, confirm, pay); the main call-to-action on a page; starting a new important workflow.                                                    |
+| **Secondary** (`variant="secondary"`) | Supporting actions or alternative paths. Can have multiple per screen, but use sparingly. | Actions that support the primary workflow; navigation between steps; non-destructive alternatives; actions that need visual presence but shouldn't compete with primary. |
+| **Tertiary** (`variant="tertiary"`)   | Minimal visual weight actions — lower priority, optional features.                        | Optional actions that don't interrupt the main flow; links within content; "Skip this step" / "Learn more"; subtle interactions.                                         |
+| **Small** (`size="small"`)            | Minor actions in areas with limited space.                                                | Dense interfaces, data tables; secondary actions within cards or compact layouts.                                                                                        |
+| **Icon-only** (`iconOnly`)            | Actions clearly represented by an icon alone.                                             | Toolbars and navigation; extremely space-constrained contexts (tables); universal actions like close, edit, settings. **Requires an accessible name** (see A11y below).  |
+| **Loading** (`loading`)               | The result of the action is being processed.                                              | Form submissions that take time; API calls or uploads; payment processing or document generation.                                                                        |
+
+## States
+
+| State    | Meaning                                                                                                                                                                       |
+| -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Default  | The normal appearance when the page loads. Each variant has its own distinct visual treatment users learn to recognize.                                                       |
+| Hover    | Immediate feedback when the cursor moves over the button — confirms it's interactive.                                                                                         |
+| Focused  | Indicates which button is currently selected via keyboard navigation — essential for Tab-key and assistive-technology users. Rendered via `:focus-visible`, never suppressed. |
+| Pressed  | Immediate feedback while the button is being clicked or tapped.                                                                                                               |
+| Disabled | The action is not currently available. Use sparingly, and always make the _reason_ discoverable elsewhere in the UI — never leave a disabled button as the only signal.       |
+
+## Do / Don't
+
+**Disabled state**
+
+- Do use it for: form submission before required fields are complete; actions that depend on a prior user selection; temporary processing states (loading).
+- Don't: leave a button permanently disabled without explanation; hide functionality behind a disabled button instead of explaining the requirement; use `disabled` to hide information the user actually needs.
+
+**Icons**
+
+Buttons can take a leading icon, a trailing icon, or be icon-only, depending on context. Be
+mindful — icons that clutter a button reduce readability and can create doubt about what the
+button does. **Never use two icons at once** (not two leading, two trailing, or icon-only +
+leading/trailing).
+
+## Placement
+
+- **Primary action placement:** put the primary (most important) button where users naturally
+  expect it. General rule for Western/LTR interfaces: primary actions go on the **right**,
+  following the reading flow toward "next"/"forward". Secondary and tertiary buttons support the
+  decision without competing with the primary action.
+- **Common patterns:** forms — primary (Submit) on the right, secondary (Save Draft) on the left;
+  navigation — Previous on the left, Next on the right; confirmations — the destructive action
+  (Delete) on the left, the safe action (Cancel) on the right.
+- **Forms:** align buttons to the left edge of form fields for easy scanning; group related
+  buttons together with appropriate spacing.
+- **Page level:** keep buttons within comfortable reach and scanning patterns; ensure mobile users
+  can tap them without hitting other elements; prefer left alignment on the page, except a
+  submit/cancel pair aligned with a top action bar, which can sit on the right.
+- **Spacing:** leave enough space between buttons to prevent accidental clicks (~8px); group
+  related actions, separate unrelated ones.
+
+## Accessibility checklist
+
+- Descriptive labels that make sense read aloud; icon-only buttons carry an accessible name
+  (`accessible-label` prop, or required slotted text) — never ship an icon-only button without one.
+- Reachable via keyboard; a clearly visible `:focus-visible` ring; logical tab order.
+- Minimum touch target size (~44px) even where the visual button is smaller (`nemo-button` pads
+  its hit area via `::after` so this holds for `small` and icon-only buttons too).
+- Before shipping a new button usage, verify: icon-only buttons have accessible names; keyboard
+  navigation works; the button's purpose is clear from its label alone; focus indicators are
+  visible; touch targets meet the minimum size.
+
+## API
+
+<Controls of={ButtonStories.Primary} />
+
+## Stories
+
+<Stories />

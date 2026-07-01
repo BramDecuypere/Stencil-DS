@@ -1,0 +1,30 @@
+# Code owners for the Nemo Design System.
+#
+# Replace the placeholder handle(s) below with real GitHub usernames/teams —
+# this file is inert until it points at accounts that exist in this repo's
+# organization. See https://docs.github.com/articles/about-code-owners.
+#
+# Last matching pattern wins, so more specific paths are listed after the
+# broader ones they refine.
+
+# Default — anything not matched more specifically below.
+*                                           @REPLACE_WITH_OWNER
+
+# Token source — the DTCG source of truth. A token rename/removal is a
+# breaking change (CLAUDE.md, docs/DEPRECATION.md); review closely.
+/packages/tokens/tokens/                    @REPLACE_WITH_TOKEN_OWNERS
+/packages/tokens/scripts/                   @REPLACE_WITH_TOKEN_OWNERS
+
+# Component source — the design system's actual public API.
+/packages/components/src/components/        @REPLACE_WITH_COMPONENT_OWNERS
+/packages/components/icons/                  @REPLACE_WITH_COMPONENT_OWNERS
+
+# Standing context + governance — changes here affect every future
+# contribution, so keep the review bar high.
+/CLAUDE.md                                  @REPLACE_WITH_OWNER
+/CONTRIBUTING.md                            @REPLACE_WITH_OWNER
+/docs/DEPRECATION.md                        @REPLACE_WITH_OWNER
+
+# Release & CI — Changesets config and the pipelines that gate/publish.
+/.changeset/                                @REPLACE_WITH_OWNER
+/.github/workflows/                         @REPLACE_WITH_OWNER

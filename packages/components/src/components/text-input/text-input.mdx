@@ -1,0 +1,106 @@
+import { Meta, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import * as TextInputStories from './text-input.stories';
+
+<Meta of={TextInputStories} />
+
+# Text Input
+
+Content on this page is sourced from the **Nemo Design System** Figma file (node `4-33`,
+"Text field - Documentation") — see `CLAUDE.md` for the source link. The prop/event/slot API table
+below is generated from `custom-elements.json`; it is not hand-maintained here.
+
+## Purpose
+
+Text inputs are interactive input components that let users enter and edit text. They're
+essential form elements that help citizens and agents input data efficiently while ensuring
+accuracy and understanding:
+
+- They organize text input in a clear, accessible manner.
+- Every text input should make its requirements immediately discoverable while keeping a clean
+  interface that guides users confidently through their task.
+
+## Variants
+
+| Variant                       | Purpose                                                                   | Usage                                                      | When to use                                                                                                                                         |
+| ----------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Basic**                     | Standard text input for general information collection.                   | Primary text-input functionality across most forms.        | Basic information collection (name, email, address); simple data-entry forms; any straightforward text input.                                       |
+| **Icon** (`icon`)             | Text input enhanced with a contextual icon for clarity and functionality. | A specialized but common type of input field.              | Password fields (with a show/hide toggle); currency or measurement inputs; fields the user can copy.                                                |
+| **Tooltip** (`tooltip`)       | Text input with contextual help and guidance.                             | Complex forms that need additional explanation or context. | Technical or specialized terminology; complex validation rules; when extra context improves success; accessibility support for screen-reader users. |
+| **Expandable** (`expandable`) | Multi-line text input for longer content — renders a `<textarea>`.        | Extended text input requiring multiple lines.              | Comments/feedback; descriptions; message composition; anything requiring more than one line; paragraph-length responses.                            |
+
+## States
+
+| State           | Meaning                                                                                                                                                                                                                                               |
+| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Default         | The normal appearance on load. Placeholder text guides users about the expected input.                                                                                                                                                                |
+| Hover / Focused | Activated when users click, tab into, or hover over the field — shows a focus indicator and prepares the field for input.                                                                                                                             |
+| Active          | Shows user input as they type; the field contains text and a visible cursor.                                                                                                                                                                          |
+| Filled          | Shows completed input, clearly indicating the field contains valid data and is ready for submission.                                                                                                                                                  |
+| Disabled        | The field is not currently available for input. Use sparingly, and always give context for _why_.                                                                                                                                                     |
+| Read-only       | For displaying already-filled-in information the user shouldn't edit. **Disabled is not accessible enough for this** — read-only must stay focusable and be announced by assistive tech, so use read-only (never disabled) to show non-editable data. |
+| Error           | The input doesn't meet validation requirements. Give clear, actionable guidance for correction.                                                                                                                                                       |
+| Warning         | A potential issue that doesn't block submission but may need the user's attention.                                                                                                                                                                    |
+
+## Content & labels
+
+- Be as concise as possible while remaining clear about what's expected.
+- Labels should clearly indicate the required information; adapt wording to your service's
+  terminology and users.
+- Use consistent labeling patterns across similar fields; provide contextual help
+  (`tooltip`/`helper-text`) when requirements might be unclear.
+- Be explicit about data formats, requirements, or constraints in the helper text — e.g. "minimum
+  38h", "Password (minimum 8 characters, include numbers)".
+- Don't truncate label text with an ellipsis if you can avoid it.
+
+**Required vs. optional fields**
+
+- Mark required fields clearly with an asterisk (`*`) or a "Required" indicator (the `required`
+  prop renders this).
+- If most fields in a form are required, consider marking the optional ones instead.
+- **Never rely on color alone** to indicate required status.
+
+## Layout
+
+Multi-column layouts can hurt form scannability — prefer a single column. The one broad exception
+is closely related, linked fields (name + surname, address + house number, postal code + city):
+pairing these is fine (see the `Paired` story). Field length is itself a hint to users about the
+expected input — use it as a helper for fields with a defined character count (ID numbers, phone
+numbers, postal codes, etc.).
+
+## Accessibility checklist
+
+**Screen reader support**
+
+- Descriptive labels that make sense read aloud.
+- `aria-describedby` links the field to its helper/validation text.
+- Field purpose is clear without relying on visual cues alone.
+- `aria-invalid` on error states, `aria-required` on required fields.
+
+**Keyboard navigation**
+
+- Every field is reachable via keyboard; focus indicators are clearly visible; tab order follows a
+  logical sequence.
+
+**Touch accessibility**
+
+- Minimum touch target size (44px); adequate spacing between fields to avoid accidental
+  activation; labels are clickable and focus their field.
+
+**Before shipping, verify:**
+
+- Fields have descriptive accessible names.
+- Keyboard navigation works through all fields.
+- Field purpose is clear from the label alone (not just the placeholder).
+- Focus indicators are visible.
+- Touch targets meet the minimum size.
+- Error messages are announced appropriately.
+- Required-field indicators work with screen readers.
+- Placeholder text never substitutes for a real `<label>`.
+
+## API
+
+<Controls of={TextInputStories.Default} />
+
+## Stories
+
+<Stories />

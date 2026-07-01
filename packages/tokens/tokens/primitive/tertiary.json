@@ -1,0 +1,12 @@
+{
+  "palette": {
+    "tertiary": {
+      "10": { "$value": "#610047", "$type": "color" },
+      "30": { "$value": "#c40149", "$type": "color" },
+      "40": { "$value": "#eb142a", "$type": "color" },
+      "80": { "$value": "#fcedf6", "$type": "color" },
+      "90": { "$value": "#fcedf9", "$type": "color" },
+      "100": { "$value": "#ffffff", "$type": "color" }
+    }
+  }
+}

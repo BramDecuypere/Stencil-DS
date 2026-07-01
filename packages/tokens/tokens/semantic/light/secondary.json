@@ -1,0 +1,12 @@
+{
+  "color": {
+    "secondary": { "$value": "{palette.secondary.40}", "$type": "color" },
+    "on-secondary": { "$value": "{palette.secondary.100}", "$type": "color" },
+    "secondary-container": { "$value": "{palette.secondary.90}", "$type": "color" },
+    "on-secondary-container": { "$value": "{palette.secondary.30}", "$type": "color" },
+    "secondary-fixed": { "$value": "{palette.secondary.90}", "$type": "color" },
+    "on-secondary-fixed": { "$value": "{palette.secondary.10}", "$type": "color" },
+    "secondary-fixed-dim": { "$value": "{palette.secondary.80}", "$type": "color" },
+    "on-secondary-fixed-variant": { "$value": "{palette.secondary.30}", "$type": "color" }
+  }
+}

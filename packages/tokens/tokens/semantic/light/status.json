@@ -1,0 +1,20 @@
+{
+  "color": {
+    "error": { "$value": "{palette.error.40}", "$type": "color" },
+    "on-error": { "$value": "{palette.error.100}", "$type": "color" },
+    "error-container": { "$value": "{palette.error.90}", "$type": "color" },
+    "on-error-container": { "$value": "{palette.error.30}", "$type": "color" },
+    "info": { "$value": "{palette.info.40}", "$type": "color" },
+    "on-info": { "$value": "{palette.info.100}", "$type": "color" },
+    "info-container": { "$value": "{palette.info.90}", "$type": "color" },
+    "on-info-container": { "$value": "{palette.info.30}", "$type": "color" },
+    "warn": { "$value": "{palette.warn.40}", "$type": "color" },
+    "on-warn": { "$value": "{palette.warn.100}", "$type": "color" },
+    "warn-container": { "$value": "{palette.warn.90}", "$type": "color" },
+    "on-warn-container": { "$value": "{palette.warn.30}", "$type": "color" },
+    "success": { "$value": "{palette.success.40}", "$type": "color" },
+    "on-success": { "$value": "{palette.success.100}", "$type": "color" },
+    "success-container": { "$value": "{palette.success.90}", "$type": "color" },
+    "on-success-container": { "$value": "{palette.success.30}", "$type": "color" }
+  }
+}

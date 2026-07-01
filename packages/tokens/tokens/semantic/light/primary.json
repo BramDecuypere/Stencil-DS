@@ -1,0 +1,13 @@
+{
+  "color": {
+    "primary": { "$value": "{palette.primary.40}", "$type": "color" },
+    "on-primary": { "$value": "{palette.primary.100}", "$type": "color" },
+    "primary-container": { "$value": "{palette.primary.90}", "$type": "color" },
+    "on-primary-container": { "$value": "{palette.primary.30}", "$type": "color" },
+    "primary-fixed": { "$value": "{palette.primary.90}", "$type": "color" },
+    "on-primary-fixed": { "$value": "{palette.primary.10}", "$type": "color" },
+    "primary-fixed-dim": { "$value": "{palette.primary.80}", "$type": "color" },
+    "on-primary-fixed-variant": { "$value": "{palette.primary.30}", "$type": "color" },
+    "inverse-primary": { "$value": "{palette.primary.80}", "$type": "color" }
+  }
+}
